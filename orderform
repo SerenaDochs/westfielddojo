@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prize Selection Form</title>
+    <style>
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .prize-button {
+            margin-right: 10px;
+            margin-bottom: 10px;
+            padding: 5px;
+            cursor: pointer;
+        }
+
+        #selectedPrizesList {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Prize Selection Form</h2>
+
+    <form id="prizeForm">
+        <label for="classSelection">Select Class:</label>
+        <select id="classSelection" onchange="populateStudents()" required>
+            <option value="class1">Richardson</option>
+            <option value="class2">Carter</option>
+            <option value="class3">Dochstader</option>
+            <!-- Add more classes as needed -->
+        </select>
+
+        <label for="studentInfo">Select Student:</label>
+        <select id="studentInfo" required>
+            <!-- Options will be dynamically populated based on the selected class -->
+        </select>
+
+        <label>Select Prize:</label>
+        <div>
+            <button class="prize-button" type="button" onclick="addPrize(10)">Prize 1 (10 points)</button>
+            <button class="prize-button" type="button" onclick="addPrize(20)">Prize 2 (20 points)</button>
+            <button class="prize-button" type="button" onclick="addPrize(30)">Prize 3 (30 points)</button>
+        </div>
+
+        <div id="selectedPrizesList"></div>
+
+        <label for="optionalNotes">Optional Notes:</label>
+        <textarea id="optionalNotes" rows="4" cols="50"></textarea>
+
+        <button type="button" onclick="calculatePoints()">Calculate Points</button>
+
+        <label for="pointsLeft">Points Left:</label>
+        <input type="text" id="pointsLeft" readonly>
+        <p id="errorMessage" style="color: red; display: none;">Error: Points left cannot be negative!</p>
+
+        <button type="submit" id="submitButton" disabled>Submit</button>
+    </form>
+
+    <script>
+        function populateStudents() {
+            const classSelection = document.getElementById('classSelection').value;
+            const studentDropdown = document.getElementById('studentInfo');
+
+            // Clear previous options
+            studentDropdown.innerHTML = "";
+
+            // Add students based on the selected class
+            switch (classSelection) {
+                case 'class1':
+                    addStudentOption("class1-student1-100", "Kalynce Ayler (100 points)");
+                    addStudentOption("class1-student2-150", "Jovon Crawford (150 points)");
+                    addStudentOption("class1-student3-100", "Giovonnie Edwards (100 points)");
+                    addStudentOption("class1-student4-150", "Maliah Erkard (150 points)");
+                    addStudentOption("class1-student5-100", "Skylar Fleming (100 points)");
+                    addStudentOption("class1-student6-150", "Ka'Lei Frank (150 points)");
+                    addStudentOption("class1-student7-100", "Fernando Gaddy (100 points)");
+                    addStudentOption("class1-student8-150", "Mariyah Gibson (150 points)");
+                    addStudentOption("class1-student9-100", "James Gray (100 points)");
+                    addStudentOption("class1-student10-150", "Anthony Griffin (150 points)");
+                    addStudentOption("class1-student11-100", "Rakai Hawkins (100 points)");
+                    addStudentOption("class1-student12-150", "Brandon Hoskins (150 points)");
+                    addStudentOption("class1-student13-100", "Kyra Huffman (100 points)");
+                    addStudentOption("class1-student14-150", "Gabrielle Hunter (150 points)");
+                    addStudentOption("class1-student15-100", "Mark Jones (100 points)");
+                    addStudentOption("class1-student16-150", "Lamar Leaster (150 points)");
+                    addStudentOption("class1-student17-100", "Bailey Lee (100 points)");
+                    addStudentOption("class1-student18-150", "Sarinity Mitchell (150 points)");
+                    addStudentOption("class1-student19-100", "MaKinley Orr-Matthews (100 points)");
+                    addStudentOption("class1-student20-150", "De'Shawn Perkins (150 points)");
+                    addStudentOption("class1-student21-100", "Alyjah Rodgers (100 points)");
+                    addStudentOption("class1-student22-150", "Chase Rozier (150 points)");
+                    addStudentOption("class1-student23-100", "Khloe Simon (100 points)");
+                    addStudentOption("class1-student24-150", "Alona Smith (150 points)");
+                    addStudentOption("class1-student25-100", "Devin Smith (100 points)");
+                    addStudentOption("class1-student26-150", "Exavia Wells-Clay (150 points)");
+                    addStudentOption("class1-student27-150", "Jacob Williams (150 points)");
+                    // Add more students as needed for Class 1
+                    break;
+                case 'class2':
+                    addStudentOption("class2-student1-100", "Peyton Bryant (100 points)");
+                    addStudentOption("class2-student2-150", "Angelo Buchanan (150 points)");
+                    addStudentOption("class2-student3-100", "Lah'nnavia Carr (100 points)");
+                    addStudentOption("class2-student4-150", "Willie Cash (150 points)");
+                    addStudentOption("class2-student5-100", "Kamea Crawford (100 points)");
+                    addStudentOption("class2-student6-150", "Daniel Davis (150 points)");
+                    addStudentOption("class2-student7-100", "Teonnie Davis (100 points)");
+                    addStudentOption("class2-student8-150", "Zion Davis (150 points)");
+                    addStudentOption("class2-student9-100", "Aria Gaddy (100 points)");
+                    addStudentOption("class2-student10-150", "Miles Hairston (150 points)");
+                    addStudentOption("class2-student11-100", "Ethan Hall (100 points)");
+                    addStudentOption("class2-student12-150", "Kaleb Helton (150 points)");
+                    addStudentOption("class2-student13-100", "Alaijah Hill (100 points)");
+                    addStudentOption("class2-student14-150", "Davion Hobson (150 points)");
+                    addStudentOption("class2-student15-100", "Ja'Nice Hollins (100 points)");
+                    addStudentOption("class2-student16-150", "Kaleb Jackson (150 points)");
+                    addStudentOption("class2-student17-100", "Amir Jones (100 points)");
+                    addStudentOption("class2-student18-150", "Dior Jones (150 points)");
+                    addStudentOption("class2-student19-100", "Donivan Jones (100 points)");
+                    addStudentOption("class2-student20-150", "Bre'Air King (150 points)");
+                    addStudentOption("class2-student21-100", "Krystin Klugh (100 points)");
+                    addStudentOption("class2-student22-150", "Makayla Lampkins (150 points)");
+                    addStudentOption("class2-student23-100", "LaDonis Lyons (100 points)");
+                    addStudentOption("class2-student24-150", "Ay'Ranna Mitchell (150 points)");
+                    addStudentOption("class2-student25-100", "Alayah Mullen (100 points)");
+                    addStudentOption("class2-student26-150", "Mahri Pardon (150 points)");
+                    addStudentOption("class2-student27-150", "Sahira Thomas (150 points)");
+                    addStudentOption("class2-student28-150", "Bradyn Webb (150 points)");
+                    // Add more students as needed for Class 2
+                    break;
+                case 'class3':
+                    addStudentOption("class3-student1-100", "Kre Ali (100 points)");
+                    addStudentOption("class3-student2-150", "Antione Bivens (150 points)");
+                    addStudentOption("class3-student3-100", "Darryona Blackwell-ivory (100 points)");
+                    addStudentOption("class3-student4-150", "Cree Brown (150 points)");
+                    addStudentOption("class3-student5-100", "Keithyn Cabrea Vargas (100 points)");
+                    addStudentOption("class3-student6-150", "Railyn Chatman (150 points)");
+                    addStudentOption("class3-student7-100", "Lyric Colbert (100 points)");
+                    addStudentOption("class3-student8-150", "Valentina Cruz Pinilla (150 points)");
+                    addStudentOption("class3-student9-100", "London Dixon (100 points)");
+                    addStudentOption("class3-student10-150", "Kaedan Felton (150 points)");
+                    addStudentOption("class3-student11-100", "Destinee Gainey (100 points)");
+                    addStudentOption("class3-student12-150", "Carmen Gardin (150 points)");
+                    addStudentOption("class3-student13-100", "Journie Horne (100 points)");
+                    addStudentOption("class3-student14-150", "Makenzie Houston (150 points)");
+                    addStudentOption("class3-student15-100", "Isaiah Johnson (100 points)");
+                    addStudentOption("class3-student16-150", "SaRiyah Jones (150 points)");
+                    addStudentOption("class3-student17-100", "Ryan Law (100 points)");
+                    addStudentOption("class3-student18-150", "Samuel Myers (150 points)");
+                    addStudentOption("class3-student19-100", "Davin Nelson (100 points)");
+                    addStudentOption("class3-student20-150", "Meagan Rogers (150 points)");
+                    addStudentOption("class3-student21-100", "Braylin Thomas (100 points)");
+                    addStudentOption("class3-student22-150", "Keyonta Thompson (150 points)");
+                    addStudentOption("class3-student23-100", "Da'Nylah Turner (100 points)");
+                    addStudentOption("class3-student24-150", "Prince Uche (150 points)");
+                    addStudentOption("class3-student25-100", "Taelyn Williams (100 points)");
+                    addStudentOption("class3-student26-150", "Hampton Young (150 points)");
+                    // Add more students as needed for Class 3
+                    break;
+                // Add more cases for additional classes
+            }
+        }
+
+        function addStudentOption(value, text) {
+            const option = document.createElement('option');
+            option.value = value;
+            option.text = text;
+            document.getElementById('studentInfo').add(option);
+        }
+
+        function addPrize(points) {
+            const selectedPrizesList = document.getElementById('selectedPrizesList');
+            const prizeListItem = document.createElement('div');
+            prizeListItem.innerHTML = `Prize ${points} (${points} points) <button type="button" onclick="removePrize(this, ${points})">Remove</button>`;
+            selectedPrizesList.appendChild(prizeListItem);
+        }
+
+        function removePrize(button, points) {
+            const selectedPrizesList = document.getElementById('selectedPrizesList');
+            selectedPrizesList.removeChild(button.parentNode);
+            calculatePoints();
+        }
+
+        function calculatePoints() {
+            const studentInfo = document.getElementById('studentInfo').value.split('-');
+            const className = studentInfo[0];
+            const pointsAvailable = parseInt(studentInfo[2]);
+            const selectedPrizeItems = document.getElementById('selectedPrizesList').children;
+            let totalPointsUsed = 0;
+
+            for (let i = 0; i < selectedPrizeItems.length; i++) {
+                totalPointsUsed += parseInt(selectedPrizeItems[i].textContent.match(/\d+/)[0]);
+            }
+
+            const pointsLeft = pointsAvailable - totalPointsUsed;
+            document.getElementById('pointsLeft').value = pointsLeft;
+
+            // Display error message if points left are negative
+            const errorMessage = document.getElementById('errorMessage');
+            errorMessage.style.display = pointsLeft < 0 ? 'block' : 'none';
+
+            // Disable or enable submit button based on points left
+            document.getElementById('submitButton').disabled = pointsLeft < 0;
+        }
+
+        document.getElementById('prizeForm').addEventListener('submit', function (event) {
+            if (parseInt(document.getElementById('pointsLeft').value) < 0) {
+                // Prevent form submission if points left is negative
+                event.preventDefault();
+                alert('Error: Points left cannot be negative!');
+            } else {
+                // You can perform further submission logic here
+                alert('Form submitted!');
+            }
+        });
+    </script>
+
+<script>
+  document.getElementById('prizeForm').addEventListener('submit', function (event) {
+    event.preventDefault();
+
+    // Collect form data
+    const formData = {
+      class: document.getElementById('classSelection').value,
+      student: document.getElementById('studentInfo').value,
+      prizes: Array.from(document.getElementById('selectedPrizesList').children).map(item => item.textContent),
+      notes: document.getElementById('optionalNotes').value,
+      pointsLeft: document.getElementById('pointsLeft').value,
+    };
+
+    // Send form data to the Google Apps Script URL
+    try {
+      const scriptUrl = 'https://script.google.com/a/macros/nhaschools.com/s/AKfycbyNwgx6VLGd93PTiOal2OLJPVoolP2L7ILQ7M8ilS_2QNsp3svUsXWF-O-wiwy98NnU/exec';
+      const response = await fetch(scriptUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const result = await response.json();
+      console.log('Google Apps Script response:', result);
+
+      // Optionally, perform additional actions based on the response
+
+      alert('Form submitted successfully!');
+    } catch (error) {
+      console.error('Error submitting form data to Google Apps Script:', error);
+      alert('Error submitting form. Please try again.');
+    }
+  });
+</script>
+
+</body>
+</html>
